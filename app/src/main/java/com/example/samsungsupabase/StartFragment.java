@@ -56,8 +56,10 @@ public class StartFragment extends Fragment {
                     public void onResponse(Call<ResponseLogoutUser> call, Response<ResponseLogoutUser> response) {
                         if (response.isSuccessful()){
                             Toast.makeText(getContext(), "Успешный выход", Toast.LENGTH_LONG).show();
-                            //очистим поля ввода и токен пользователя
+                            //очистим поля ввода и данные пользователя
                             Utils.USER_TOKEN = "";
+                            Utils.USER_EMAIL = "";
+                            Utils.USER_ID = "";
                             binding.emailField.setText("");
                             binding.passwordField.setText("");
                         }
@@ -92,7 +94,8 @@ public class StartFragment extends Fragment {
                         //запомним данные пользователя
                         Utils.USER_ID = response.body().getUser().getId();
                         Utils.USER_TOKEN = response.body().getAccessToken();
-                        //перейдем на фрагмент с заказами пользователя
+                        Utils.USER_EMAIL = email;
+                        //программно перейдем на фрагмент с заказами пользователя
                         binding.signInButton.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_startFragment_to_ordersFragment));
                         binding.signInButton.performClick();
 
@@ -118,9 +121,9 @@ public class StartFragment extends Fragment {
                 public void onResponse(Call<ResponseSignupUser> call, Response<ResponseSignupUser> response) {
                     if (response.isSuccessful()){
                         Toast.makeText(getContext(), "Пользователь создан", Toast.LENGTH_SHORT).show();
-                        Utils.USER_ID = response.body().
-                                getUser().getId();
+                        Utils.USER_ID = response.body().getUser().getId();
                         Utils.USER_TOKEN = response.body().getAccessToken();
+                        Utils.USER_EMAIL = email;
                     }else {
                         Toast.makeText(getContext(), "Ошибка при создании пользователя", Toast.LENGTH_SHORT).show();
                     }

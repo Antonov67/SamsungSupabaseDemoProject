@@ -25,7 +25,7 @@ public interface API {
 
     //выбор заказов пользователя
     @GET("orders")
-    Call<List<Order>> getOrdersByUser(@Header("apikey") String apikey, @Header("Content-Type") String contentType, @Query("user_id") String usetId, @Query("select") String select);
+    Call<List<Order>> getOrdersByUser(@Header("apikey") String apikey, @Header("Content-Type") String contentType, @Query("user_id") String userId, @Query("select") String select);
 
     //добавление заказа пользователя
     @POST("orders")

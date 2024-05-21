@@ -8,4 +8,5 @@
     <string name="sign_in">sign in</string>
     <string name="sign_up">sign_up</string>
     <string name="logout">logout</string>
+    <string name="order_list_text">Список заказов пользователя</string>
 </resources>

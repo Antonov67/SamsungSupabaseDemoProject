@@ -19,7 +19,7 @@ public class Order {
     public String product;
     @SerializedName("cost")
     @Expose
-    public Double cost;
+    public double cost;
 
     public Order(String userId, String product, Double cost) {
         this.userId = userId;
@@ -27,43 +27,14 @@ public class Order {
         this.cost = cost;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getProduct() {
-        return product;
-    }
-
-    public void setProduct(String product) {
-        this.product = product;
-    }
-
-    public Double getCost() {
-        return cost;
-    }
-
-    public void setCost(Double cost) {
-        this.cost = cost;
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id='" + id + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", userId='" + userId + '\'' +
+                ", product='" + product + '\'' +
+                ", cost=" + cost +
+                '}';
     }
 }
