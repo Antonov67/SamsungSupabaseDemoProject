@@ -61,8 +61,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()){
                     Toast.makeText(context, "Запись удалена", Toast.LENGTH_SHORT).show();
+                    notifyDataSetChanged();
                     orders.remove(position);
-                    notifyItemRemoved(position);
                 }
             }
 
