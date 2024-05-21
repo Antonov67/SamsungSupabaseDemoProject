@@ -23,6 +23,10 @@ public interface API {
     @POST("logout")
     Call<ResponseLogoutUser> userLogout(@Header("Authorization") String token, @Header("apikey") String apikey, @Header("Content-Type") String contentType);
 
+    //получение всех заказов
+    @GET("orders")
+    Call<List<Order>> getAllOrders(@Header("apikey") String apikey, @Header("Content-Type") String contentType, @Query("select") String select);
+
     //выбор заказов пользователя
     @GET("orders")
     Call<List<Order>> getOrdersByUser(@Header("apikey") String apikey, @Header("Content-Type") String contentType, @Query("user_id") String userId, @Query("select") String select);

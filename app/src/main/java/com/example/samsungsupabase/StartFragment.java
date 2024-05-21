@@ -27,7 +27,7 @@ public class StartFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentStartBinding.inflate(inflater, container, false);
 
-        api = RetrofitClient.getInstance().create(API.class);
+        api = RetrofitClientAuth.getInstance().create(API.class);
 
         //Нажатие на кнопку авторизации
         binding.signInButton.setOnClickListener(view12 -> {

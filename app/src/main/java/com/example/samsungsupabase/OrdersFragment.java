@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.samsungsupabase.databinding.FragmentOrdersBinding;
-import com.example.samsungsupabase.databinding.FragmentStartBinding;
 
 import java.util.List;
 
@@ -33,15 +32,14 @@ public class OrdersFragment extends Fragment {
         binding.userEmail.setText(Utils.USER_EMAIL);
 
         //получим данные о заказах пользователя с сервера
-        api = RetrofitClient.getInstance().create(API.class);
+        api = RetrofitClientRest.getInstance().create(API.class);
         Call<List<Order>> call = api.getOrdersByUser(Utils.APIKEY, Utils.CONTENT_TYPE, "eq." + Utils.USER_ID, "*");
-        Toast.makeText(getContext(), "eq." + Utils.USER_ID, Toast.LENGTH_SHORT).show();
+
         call.enqueue(new Callback<List<Order>>() {
             @Override
             public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
                 if (response.isSuccessful()){
                     //создадим адаптер и передадим в него данные
-                    Toast.makeText(getContext(), "Super", Toast.LENGTH_SHORT).show();
                     orderAdapter = new OrderAdapter(response.body(), getContext());
                     binding.list.setAdapter(orderAdapter);
                 }else {
@@ -54,10 +52,6 @@ public class OrdersFragment extends Fragment {
 
             }
         });
-
-
-
-
 
         return binding.getRoot();
     }
