@@ -3,29 +3,31 @@ package com.example.samsungsupabase.view;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.samsungsupabase.model.retrofit.RetrofitClientRest;
+
 import com.example.samsungsupabase.Utils;
 import com.example.samsungsupabase.databinding.FragmentOrdersBinding;
 import com.example.samsungsupabase.model.retrofit.API;
 import com.example.samsungsupabase.model.Order;
 import com.example.samsungsupabase.model.OrderAdapter;
+import com.example.samsungsupabase.viewmodel.ViewModel;
 
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class OrdersFragment extends Fragment {
     private FragmentOrdersBinding binding;
     private API api;
     OrderAdapter orderAdapter;
+    ViewModel viewModel;
+    OrderAdapter.LongClickItemListener longClickItemListener;
 
 
 
@@ -36,25 +38,33 @@ public class OrdersFragment extends Fragment {
         binding.userId.setText(Utils.USER_ID);
         binding.userEmail.setText(Utils.USER_EMAIL);
 
-        //получим данные о заказах пользователя с сервера
-        api = RetrofitClientRest.getInstance().create(API.class);
-        Call<List<Order>> call = api.getOrdersByUser(Utils.APIKEY, Utils.CONTENT_TYPE, "eq." + Utils.USER_ID, "*");
+        viewModel = new ViewModelProvider(this).get(ViewModel.class);
 
-        call.enqueue(new Callback<List<Order>>() {
+        //получим данные о заказах пользователя с сервера
+
+        viewModel.getOrdersByUser().observe(getViewLifecycleOwner(), new Observer<List<Order>>() {
             @Override
-            public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
-                if (response.isSuccessful()){
+            public void onChanged(List<Order> orders) {
+                if (orders != null){
                     //создадим адаптер и передадим в него данные
-                    orderAdapter = new OrderAdapter(response.body(), getContext());
+                    longClickItemListener = new OrderAdapter.LongClickItemListener() {
+                        @Override
+                        public void deleteOrder(String id, int position) {
+                            viewModel.deleteOrder(id).observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+                                @Override
+                                public void onChanged(Boolean aBoolean) {
+                                    if (aBoolean){
+                                        Toast.makeText(getContext(), "Запись удалена", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                        }
+                    };
+                    orderAdapter = new OrderAdapter(orders, getContext(), longClickItemListener);
                     binding.list.setAdapter(orderAdapter);
                 }else {
-                    Toast.makeText(getContext(), call.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Данных нет", Toast.LENGTH_SHORT).show();
                 }
-            }
-
-            @Override
-            public void onFailure(Call<List<Order>> call, Throwable throwable) {
-
             }
         });
 

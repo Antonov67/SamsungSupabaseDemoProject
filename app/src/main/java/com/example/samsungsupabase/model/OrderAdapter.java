@@ -8,29 +8,36 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
+
 
 import com.example.samsungsupabase.Utils;
 import com.example.samsungsupabase.databinding.ListItemBinding;
 import com.example.samsungsupabase.model.retrofit.API;
 import com.example.samsungsupabase.model.retrofit.RetrofitClientRest;
+import com.example.samsungsupabase.viewmodel.ViewModel;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
+
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
 
     private List<Order> orders = new ArrayList<>();
     private Context context;
-    ListItemBinding binding;
+    private ListItemBinding binding;
+    private LongClickItemListener longClickItemListener;
 
-    public OrderAdapter(List<Order> orders, Context context) {
+    public OrderAdapter(List<Order> orders, Context context, LongClickItemListener longClickItemListener) {
         this.orders = orders;
         this.context = context;
+        this.longClickItemListener = longClickItemListener;
     }
 
     @NonNull
@@ -50,40 +57,29 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             @Override
             public boolean onLongClick(View view) {
                 //удалим запись по длинному нажатию
-                deleteOrder(orders.get(position).id, position);
+                longClickItemListener.deleteOrder(orders.get(position).id, position);
+                notifyDataSetChanged();
+                orders.remove(position);
                 return true;
             }
         });
     }
 
-    private void deleteOrder(String id, int position) {
-        API api = RetrofitClientRest.getInstance().create(API.class);
-        Call<Void> call = api.deleteOrder(Utils.APIKEY, Utils.CONTENT_TYPE, "eq." + id);
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()){
-                    Toast.makeText(context, "Запись удалена", Toast.LENGTH_SHORT).show();
-                    notifyDataSetChanged();
-                    orders.remove(position);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable throwable) {
-                Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     @Override
     public int getItemCount() {
         return orders.size();
     }
 
+
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(ListItemBinding itemBinding) {
             super(itemBinding.getRoot());
         }
+    }
+
+    public interface LongClickItemListener{
+        void deleteOrder(String id, int position);
     }
 }
