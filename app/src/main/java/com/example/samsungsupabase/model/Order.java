@@ -1,4 +1,4 @@
-package com.example.samsungsupabase;
+package com.example.samsungsupabase.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

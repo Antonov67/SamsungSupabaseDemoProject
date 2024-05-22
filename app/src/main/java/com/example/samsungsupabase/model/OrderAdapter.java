@@ -1,4 +1,4 @@
-package com.example.samsungsupabase;
+package com.example.samsungsupabase.model;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -10,7 +10,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.samsungsupabase.Utils;
 import com.example.samsungsupabase.databinding.ListItemBinding;
+import com.example.samsungsupabase.model.retrofit.API;
+import com.example.samsungsupabase.model.retrofit.RetrofitClientRest;
 
 import java.util.ArrayList;
 import java.util.List;

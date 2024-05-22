@@ -1,4 +1,4 @@
-package com.example.samsungsupabase;
+package com.example.samsungsupabase.view;
 
 import android.os.Bundle;
 
@@ -10,7 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.samsungsupabase.R;
+import com.example.samsungsupabase.Utils;
 import com.example.samsungsupabase.databinding.FragmentStartBinding;
+import com.example.samsungsupabase.model.retrofit.API;
+import com.example.samsungsupabase.model.Account;
+import com.example.samsungsupabase.model.ResponseLogoutUser;
+import com.example.samsungsupabase.model.ResponseSignUser;
+import com.example.samsungsupabase.model.retrofit.RetrofitClientAuth;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -85,10 +92,10 @@ public class StartFragment extends Fragment {
         Account account = new Account(email, password);
 
         if (type.equals("signIn")) {
-            Call<ResponseSigninUser> call = api.signInByEmailAndPswrd("password", Utils.APIKEY, Utils.CONTENT_TYPE, account);
-            call.enqueue(new Callback<ResponseSigninUser>() {
+            Call<ResponseSignUser> call = api.signInByEmailAndPswrd("password", Utils.APIKEY, Utils.CONTENT_TYPE, account);
+            call.enqueue(new Callback<ResponseSignUser>() {
                 @Override
-                public void onResponse(Call<ResponseSigninUser> call, Response<ResponseSigninUser> response) {
+                public void onResponse(Call<ResponseSignUser> call, Response<ResponseSignUser> response) {
                     if (response.isSuccessful()){
                         Toast.makeText(getContext(), "Успешная авторизация", Toast.LENGTH_SHORT).show();
                         //запомним данные пользователя
@@ -108,17 +115,17 @@ public class StartFragment extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<ResponseSigninUser> call, Throwable throwable) {
+                public void onFailure(Call<ResponseSignUser> call, Throwable throwable) {
 
                 }
             });
         }
 
         if (type.equals("signUp")){
-            Call<ResponseSignupUser> call = api.signUpByEmailAndPswrd(Utils.APIKEY, Utils.CONTENT_TYPE, account);
-            call.enqueue(new Callback<ResponseSignupUser>() {
+            Call<ResponseSignUser> call = api.signUpByEmailAndPswrd(Utils.APIKEY, Utils.CONTENT_TYPE, account);
+            call.enqueue(new Callback<ResponseSignUser>() {
                 @Override
-                public void onResponse(Call<ResponseSignupUser> call, Response<ResponseSignupUser> response) {
+                public void onResponse(Call<ResponseSignUser> call, Response<ResponseSignUser> response) {
                     if (response.isSuccessful()){
                         Toast.makeText(getContext(), "Пользователь создан", Toast.LENGTH_SHORT).show();
                         Utils.USER_ID = response.body().getUser().getId();
@@ -130,7 +137,7 @@ public class StartFragment extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<ResponseSignupUser> call, Throwable throwable) {
+                public void onFailure(Call<ResponseSignUser> call, Throwable throwable) {
 
                 }
             });

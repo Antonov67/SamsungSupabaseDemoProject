@@ -1,9 +1,11 @@
-package com.example.samsungsupabase;
+package com.example.samsungsupabase.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.Navigation;
 
 import android.os.Bundle;
+
+import com.example.samsungsupabase.R;
 
 public class MainActivity extends AppCompatActivity {
 

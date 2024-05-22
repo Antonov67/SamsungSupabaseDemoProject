@@ -1,4 +1,4 @@
-package com.example.samsungsupabase;
+package com.example.samsungsupabase.model;
 
 public class Account {
     private String email;

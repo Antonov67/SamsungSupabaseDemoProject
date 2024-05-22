@@ -1,4 +1,4 @@
-package com.example.samsungsupabase;
+package com.example.samsungsupabase.view;
 
 import android.os.Bundle;
 
@@ -9,7 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.samsungsupabase.model.retrofit.RetrofitClientRest;
+import com.example.samsungsupabase.Utils;
 import com.example.samsungsupabase.databinding.FragmentOrdersBinding;
+import com.example.samsungsupabase.model.retrofit.API;
+import com.example.samsungsupabase.model.Order;
+import com.example.samsungsupabase.model.OrderAdapter;
 
 import java.util.List;
 

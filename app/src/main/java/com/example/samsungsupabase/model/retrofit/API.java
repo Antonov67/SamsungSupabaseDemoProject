@@ -1,4 +1,9 @@
-package com.example.samsungsupabase;
+package com.example.samsungsupabase.model.retrofit;
+
+import com.example.samsungsupabase.model.Account;
+import com.example.samsungsupabase.model.Order;
+import com.example.samsungsupabase.model.ResponseLogoutUser;
+import com.example.samsungsupabase.model.ResponseSignUser;
 
 import java.util.List;
 
@@ -13,11 +18,11 @@ import retrofit2.http.Query;
 public interface API {
     //регистрация пользователя
     @POST("signup")
-    Call<ResponseSignupUser> signUpByEmailAndPswrd(@Header("apikey") String apikey, @Header("Content-Type") String contentType, @Body Account account);
+    Call<ResponseSignUser> signUpByEmailAndPswrd(@Header("apikey") String apikey, @Header("Content-Type") String contentType, @Body Account account);
 
     //авторизация пользователя
     @POST("token")
-    Call<ResponseSigninUser> signInByEmailAndPswrd(@Query ("grant_type") String grantType, @Header("apikey") String apikey, @Header("Content-Type") String contentType, @Body com.example.samsungsupabase.Account account);
+    Call<ResponseSignUser> signInByEmailAndPswrd(@Query ("grant_type") String grantType, @Header("apikey") String apikey, @Header("Content-Type") String contentType, @Body Account account);
 
     //выход пользователя из аккаунта
     @POST("logout")
