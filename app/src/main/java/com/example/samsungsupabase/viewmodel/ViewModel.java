@@ -1,7 +1,6 @@
 package com.example.samsungsupabase.viewmodel;
 
 import android.app.Application;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -10,7 +9,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.samsungsupabase.Utils;
 import com.example.samsungsupabase.model.Order;
-import com.example.samsungsupabase.model.OrderAdapter;
 import com.example.samsungsupabase.model.retrofit.API;
 import com.example.samsungsupabase.model.retrofit.RetrofitClientAuth;
 import com.example.samsungsupabase.model.retrofit.RetrofitClientRest;

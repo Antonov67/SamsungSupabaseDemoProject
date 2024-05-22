@@ -15,8 +15,8 @@ import com.example.samsungsupabase.Utils;
 import com.example.samsungsupabase.databinding.FragmentStartBinding;
 import com.example.samsungsupabase.model.retrofit.API;
 import com.example.samsungsupabase.model.Account;
-import com.example.samsungsupabase.model.ResponseLogoutUser;
-import com.example.samsungsupabase.model.ResponseSignUser;
+import com.example.samsungsupabase.model.retrofit.ResponseLogoutUser;
+import com.example.samsungsupabase.model.retrofit.ResponseSignUser;
 import com.example.samsungsupabase.model.retrofit.RetrofitClientAuth;
 
 import retrofit2.Call;

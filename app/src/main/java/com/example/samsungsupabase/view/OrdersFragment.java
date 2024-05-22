@@ -16,7 +16,6 @@ import com.example.samsungsupabase.Utils;
 import com.example.samsungsupabase.databinding.FragmentOrdersBinding;
 import com.example.samsungsupabase.model.retrofit.API;
 import com.example.samsungsupabase.model.Order;
-import com.example.samsungsupabase.model.OrderAdapter;
 import com.example.samsungsupabase.viewmodel.ViewModel;
 
 import java.util.List;

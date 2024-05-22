@@ -1,30 +1,18 @@
-package com.example.samsungsupabase.model;
+package com.example.samsungsupabase.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
-
-
-import com.example.samsungsupabase.Utils;
 import com.example.samsungsupabase.databinding.ListItemBinding;
-import com.example.samsungsupabase.model.retrofit.API;
-import com.example.samsungsupabase.model.retrofit.RetrofitClientRest;
-import com.example.samsungsupabase.viewmodel.ViewModel;
-
+import com.example.samsungsupabase.model.Order;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Response;
 
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {

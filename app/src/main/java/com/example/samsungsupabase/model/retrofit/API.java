@@ -2,8 +2,6 @@ package com.example.samsungsupabase.model.retrofit;
 
 import com.example.samsungsupabase.model.Account;
 import com.example.samsungsupabase.model.Order;
-import com.example.samsungsupabase.model.ResponseLogoutUser;
-import com.example.samsungsupabase.model.ResponseSignUser;
 
 import java.util.List;
 
