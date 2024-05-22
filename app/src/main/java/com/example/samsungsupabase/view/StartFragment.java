@@ -3,6 +3,8 @@ package com.example.samsungsupabase.view;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -18,6 +20,7 @@ import com.example.samsungsupabase.model.Account;
 import com.example.samsungsupabase.model.ResponseLogoutUser;
 import com.example.samsungsupabase.model.ResponseSignUser;
 import com.example.samsungsupabase.model.retrofit.RetrofitClientAuth;
+import com.example.samsungsupabase.viewmodel.ViewModel;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,6 +30,7 @@ public class StartFragment extends Fragment {
 
     private FragmentStartBinding binding;
     private API api;
+    private ViewModel viewModel;
 
 
     @Override
@@ -35,13 +39,33 @@ public class StartFragment extends Fragment {
         binding = FragmentStartBinding.inflate(inflater, container, false);
 
         api = RetrofitClientAuth.getInstance().create(API.class);
+        viewModel = new ViewModelProvider(this).get(ViewModel.class);
+
+
 
         //Нажатие на кнопку авторизации
         binding.signInButton.setOnClickListener(view12 -> {
             String email = binding.emailField.getText().toString();
             String password = binding.passwordField.getText().toString();
+
             if (!email.equals("") && !password.equals("")) {
-                enter(email, password, "signIn");
+                viewModel.signIn(email, password).observe(getViewLifecycleOwner(), new Observer<ResponseSignUser>() {
+                    @Override
+                    public void onChanged(ResponseSignUser responseSignUser) {
+                        if (responseSignUser != null) {
+                            //запомним данные пользователя
+                            Utils.USER_ID = responseSignUser.getUser().getId();
+                            Utils.USER_TOKEN = responseSignUser.getAccessToken();
+                            Utils.USER_EMAIL = email;
+                            Toast.makeText(getContext(), "Успешный вход", Toast.LENGTH_SHORT).show();
+                            //программно перейдем на фрагмент с заказами пользователя
+                            binding.signInButton.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_startFragment_to_ordersFragment));
+                            binding.signInButton.performClick();
+                        } else {
+                            Toast.makeText(getContext(), "Ошибка входа", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         });
 
@@ -50,7 +74,20 @@ public class StartFragment extends Fragment {
             String email = binding.emailField.getText().toString();
             String password = binding.passwordField.getText().toString();
             if (!email.equals("") && !password.equals("")) {
-                enter(email, password, "signUp");
+                viewModel.signUp(email, password).observe(getViewLifecycleOwner(), new Observer<ResponseSignUser>() {
+                    @Override
+                    public void onChanged(ResponseSignUser responseSignUser) {
+                        if (responseSignUser != null) {
+                            //запомним данные пользователя
+                            Utils.USER_ID = responseSignUser.getUser().getId();
+                            Utils.USER_TOKEN = responseSignUser.getAccessToken();
+                            Utils.USER_EMAIL = email;
+                            Toast.makeText(getContext(), "Успешная регистрация", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getContext(), "Ошибка регистрации", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         });
 
@@ -61,7 +98,7 @@ public class StartFragment extends Fragment {
                 call.enqueue(new Callback<ResponseLogoutUser>() {
                     @Override
                     public void onResponse(Call<ResponseLogoutUser> call, Response<ResponseLogoutUser> response) {
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             Toast.makeText(getContext(), "Успешный выход", Toast.LENGTH_LONG).show();
                             //очистим поля ввода и данные пользователя
                             Utils.USER_TOKEN = "";
@@ -77,73 +114,10 @@ public class StartFragment extends Fragment {
                         Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
-            }else {
+            } else {
                 Toast.makeText(getContext(), "Вы не вошли в аккаунт", Toast.LENGTH_LONG).show();
             }
         });
         return binding.getRoot();
-    }
-
-
-
-
-    private void enter(String email, String password, String type) {
-
-        Account account = new Account(email, password);
-
-        if (type.equals("signIn")) {
-            Call<ResponseSignUser> call = api.signInByEmailAndPswrd("password", Utils.APIKEY, Utils.CONTENT_TYPE, account);
-            call.enqueue(new Callback<ResponseSignUser>() {
-                @Override
-                public void onResponse(Call<ResponseSignUser> call, Response<ResponseSignUser> response) {
-                    if (response.isSuccessful()){
-                        Toast.makeText(getContext(), "Успешная авторизация", Toast.LENGTH_SHORT).show();
-                        //запомним данные пользователя
-                        Utils.USER_ID = response.body().getUser().getId();
-                        Utils.USER_TOKEN = response.body().getAccessToken();
-                        Utils.USER_EMAIL = email;
-                        //программно перейдем на фрагмент с заказами пользователя
-                        binding.signInButton.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_startFragment_to_ordersFragment));
-                        binding.signInButton.performClick();
-
-
-
-                    }else {
-                        Toast.makeText(getContext(), "Ошибка авторизации", Toast.LENGTH_SHORT).show();
-                    }
-
-                }
-
-                @Override
-                public void onFailure(Call<ResponseSignUser> call, Throwable throwable) {
-
-                }
-            });
-        }
-
-        if (type.equals("signUp")){
-            Call<ResponseSignUser> call = api.signUpByEmailAndPswrd(Utils.APIKEY, Utils.CONTENT_TYPE, account);
-            call.enqueue(new Callback<ResponseSignUser>() {
-                @Override
-                public void onResponse(Call<ResponseSignUser> call, Response<ResponseSignUser> response) {
-                    if (response.isSuccessful()){
-                        Toast.makeText(getContext(), "Пользователь создан", Toast.LENGTH_SHORT).show();
-                        Utils.USER_ID = response.body().getUser().getId();
-                        Utils.USER_TOKEN = response.body().getAccessToken();
-                        Utils.USER_EMAIL = email;
-                    }else {
-                        Toast.makeText(getContext(), "Ошибка при создании пользователя", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ResponseSignUser> call, Throwable throwable) {
-
-                }
-            });
-        }
-
-
-
     }
 }

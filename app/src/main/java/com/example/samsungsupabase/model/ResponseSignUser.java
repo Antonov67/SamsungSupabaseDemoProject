@@ -19,6 +19,14 @@ public class ResponseSignUser {
     public User getUser() {
         return user;
     }
+
+    @Override
+    public String toString() {
+        return "ResponseSignUser{" +
+                "accessToken='" + accessToken + '\'' +
+                ", user=" + user +
+                '}';
+    }
 }
 
 
