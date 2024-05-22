@@ -18,5 +18,14 @@
         android:id="@+id/ordersFragment"
         android:name="com.example.samsungsupabase.view.OrdersFragment"
         android:label="fragment_orders"
-        tools:layout="@layout/fragment_orders" />
+        tools:layout="@layout/fragment_orders" >
+        <action
+            android:id="@+id/action_ordersFragment_to_addOrderFragment"
+            app:destination="@id/addOrderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addOrderFragment"
+        android:name="com.example.samsungsupabase.view.AddOrderFragment"
+        android:label="fragment_add_order"
+        tools:layout="@layout/fragment_add_order" />
 </navigation>
