@@ -62,7 +62,7 @@ public class StartFragment extends Fragment {
                     @Override
                     public void onResponse(Call<ResponseLogoutUser> call, Response<ResponseLogoutUser> response) {
                         if (response.isSuccessful()){
-                            Toast.makeText(getContext(), "Успешный выход", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), R.string.successful_exit, Toast.LENGTH_LONG).show();
                             //очистим поля ввода и данные пользователя
                             Utils.USER_TOKEN = "";
                             Utils.USER_EMAIL = "";
@@ -78,7 +78,7 @@ public class StartFragment extends Fragment {
                     }
                 });
             }else {
-                Toast.makeText(getContext(), "Вы не вошли в аккаунт", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), R.string.you_are_not_logged_in_to_your_account, Toast.LENGTH_LONG).show();
             }
         });
         return binding.getRoot();
@@ -86,7 +86,7 @@ public class StartFragment extends Fragment {
 
 
 
-
+    //метод обработки входа и регистрации
     private void enter(String email, String password, String type) {
 
         Account account = new Account(email, password);
@@ -97,7 +97,7 @@ public class StartFragment extends Fragment {
                 @Override
                 public void onResponse(Call<ResponseSignUser> call, Response<ResponseSignUser> response) {
                     if (response.isSuccessful()){
-                        Toast.makeText(getContext(), "Успешная авторизация", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.successful_authorization, Toast.LENGTH_SHORT).show();
                         //запомним данные пользователя
                         Utils.USER_ID = response.body().getUser().getId();
                         Utils.USER_TOKEN = response.body().getAccessToken();
@@ -109,7 +109,7 @@ public class StartFragment extends Fragment {
 
 
                     }else {
-                        Toast.makeText(getContext(), "Ошибка авторизации", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.authorization_error, Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -127,12 +127,12 @@ public class StartFragment extends Fragment {
                 @Override
                 public void onResponse(Call<ResponseSignUser> call, Response<ResponseSignUser> response) {
                     if (response.isSuccessful()){
-                        Toast.makeText(getContext(), "Пользователь создан", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.the_user_has_been_created, Toast.LENGTH_SHORT).show();
                         Utils.USER_ID = response.body().getUser().getId();
                         Utils.USER_TOKEN = response.body().getAccessToken();
                         Utils.USER_EMAIL = email;
                     }else {
-                        Toast.makeText(getContext(), "Ошибка при создании пользователя", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.error_in_creating_a_user, Toast.LENGTH_SHORT).show();
                     }
                 }
 

@@ -47,7 +47,7 @@ public class OrdersFragment extends Fragment {
             @Override
             public void onChanged(List<Order> orders) {
                 if (orders != null){
-                    //создадим адаптер и передадим в него данные
+                    //обработчик длинного нажатия в адаптере, но обработка удаления записи из базы данных на стороне фрагмента
                     longClickItemListener = new OrderAdapter.LongClickItemListener() {
                         @Override
                         public void deleteOrder(String id, int position) {
@@ -55,16 +55,17 @@ public class OrdersFragment extends Fragment {
                                 @Override
                                 public void onChanged(Boolean aBoolean) {
                                     if (aBoolean){
-                                        Toast.makeText(getContext(), "Запись удалена", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getContext(), R.string.the_record_has_been_deleted, Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
                         }
                     };
+                    //создадим адаптер и передадим в него данные
                     orderAdapter = new OrderAdapter(orders, getContext(), longClickItemListener);
                     binding.list.setAdapter(orderAdapter);
                 }else {
-                    Toast.makeText(getContext(), "Данных нет", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.no_data, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -72,5 +73,13 @@ public class OrdersFragment extends Fragment {
         binding.floatingActionButton.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_ordersFragment_to_addOrderFragment));
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (orderAdapter != null){
+            orderAdapter.notifyDataSetChanged();
+        }
     }
 }

@@ -26,15 +26,4 @@ public class Order {
         this.product = product;
         this.cost = cost;
     }
-
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id='" + id + '\'' +
-                ", createdAt='" + createdAt + '\'' +
-                ", userId='" + userId + '\'' +
-                ", product='" + product + '\'' +
-                ", cost=" + cost +
-                '}';
-    }
 }

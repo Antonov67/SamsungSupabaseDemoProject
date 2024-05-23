@@ -2,11 +2,25 @@
     <string name="app_name">SamsungSupabase</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="email">email</string>
-    <string name="signup">signup</string>
-    <string name="password">password</string>
-    <string name="sign_in">sign in</string>
-    <string name="sign_up">sign_up</string>
-    <string name="logout">logout</string>
-    <string name="order_list_text">Список заказов пользователя</string>
+    <string name="email">электронная почта</string>
+    <string name="signup">регистрация</string>
+    <string name="password">пароль</string>
+    <string name="sign_in">вход</string>
+    <string name="sign_up">регистрация</string>
+    <string name="logout">выход</string>
+    <string name="order_list_text">Список заказов</string>
+    <string name="order_submit">Заказ добавлен</string>
+    <string name="cost_text">цена</string>
+    <string name="product_text">товар</string>
+    <string name="order_details">Данные заказа</string>
+    <string name="no_data">Нет данных</string>
+    <string name="successful_exit">Успешный выход</string>
+    <string name="you_are_not_logged_in_to_your_account">Вы не вошли в аккаунт</string>
+    <string name="successful_authorization">Успешная авторизация</string>
+    <string name="authorization_error">Ошибка авторизации</string>
+    <string name="the_user_has_been_created">Пользователь успешно создан</string>
+    <string name="error_in_creating_a_user">Пользователь не создан</string>
+    <string name="the_record_has_been_deleted">Запись удалена</string>
+    <string name="user_id">id пользователя</string>
+    <string name="user_email">почта</string>
 </resources>

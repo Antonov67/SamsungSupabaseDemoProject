@@ -36,7 +36,7 @@ public interface API {
 
     //добавление заказа пользователя
     @POST("orders")
-    Call<Order> addOrderByUser(@Header("apikey") String apikey, @Header("Content-Type") String contentType, @Body Order order);
+    Call<Void> addOrderByUser(@Header("apikey") String apikey, @Header("Content-Type") String contentType, @Body Order order);
 
     //удаление заказа по id заказа
     @DELETE("orders")

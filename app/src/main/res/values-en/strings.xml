@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">SamsungSupabase</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="email">email</string>
+    <string name="signup">signup</string>
+    <string name="password">password</string>
+    <string name="sign_in">signin</string>
+    <string name="sign_up">signup</string>
+    <string name="logout">logout</string>
+    <string name="order_list_text">List of user orders</string>
+    <string name="order_submit">Order submit</string>
+    <string name="cost_text">cost</string>
+    <string name="product_text">product</string>
+    <string name="order_details">Order details</string>
+    <string name="no_data">No data</string>
+    <string name="successful_exit">Successful exit</string>
+    <string name="you_are_not_logged_in_to_your_account">You are not logged in to your account</string>
+    <string name="successful_authorization">Successful authorization</string>
+    <string name="authorization_error">Authorization error</string>
+    <string name="the_user_has_been_created">The user has been created</string>
+    <string name="error_in_creating_a_user">Error in creating a user</string>
+    <string name="the_record_has_been_deleted">the record has been deleted</string>
+    <string name="user_id">user_id</string>
+    <string name="user_email">user_email</string>
+</resources>

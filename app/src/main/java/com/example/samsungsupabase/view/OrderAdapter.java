@@ -45,9 +45,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             @Override
             public boolean onLongClick(View view) {
                 //удалим запись по длинному нажатию
-                longClickItemListener.deleteOrder(orders.get(position).id, position);
-                notifyDataSetChanged();
-                orders.remove(position);
+                if (position < orders.size()) {
+                    longClickItemListener.deleteOrder(orders.get(position).id, position);
+                    orders.remove(position);
+                    notifyItemRemoved(position);
+                }
                 return true;
             }
         });
@@ -67,6 +69,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         }
     }
 
+    //интерфейс для обработки длинного нажатия на элемент списка
     public interface LongClickItemListener{
         void deleteOrder(String id, int position);
     }

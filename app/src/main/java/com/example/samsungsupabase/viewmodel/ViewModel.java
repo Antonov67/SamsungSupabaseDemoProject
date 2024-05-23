@@ -23,6 +23,7 @@ public class ViewModel extends AndroidViewModel {
 
     MutableLiveData<List<Order>> orders = new MutableLiveData<>();
     MutableLiveData<Boolean> isOrderDelete = new MutableLiveData<>();
+    MutableLiveData<Boolean> isOrderSubmit = new MutableLiveData<>();
     API api;
 
     public ViewModel(@NonNull Application application) {
@@ -30,6 +31,7 @@ public class ViewModel extends AndroidViewModel {
         api = RetrofitClientAuth.getInstance().create(API.class);
     }
 
+    //получение заказов пользователя
     public LiveData<List<Order>> getOrdersByUser() {
         api = RetrofitClientRest.getInstance().create(API.class);
         Call<List<Order>> call = api.getOrdersByUser(Utils.APIKEY, Utils.CONTENT_TYPE, "eq." + Utils.USER_ID, "*");
@@ -49,7 +51,9 @@ public class ViewModel extends AndroidViewModel {
         return orders;
     }
 
+    // удаление заказа
     public LiveData<Boolean> deleteOrder(String id) {
+        api = RetrofitClientRest.getInstance().create(API.class);
         Call<Void> call = api.deleteOrder(Utils.APIKEY, Utils.CONTENT_TYPE, "eq." + id);
         call.enqueue(new Callback<Void>() {
             @Override
@@ -67,5 +71,27 @@ public class ViewModel extends AndroidViewModel {
             }
         });
         return isOrderDelete;
+    }
+
+    //добавление заказа
+    public LiveData<Boolean> submitOrder(Order order){
+        api = RetrofitClientRest.getInstance().create(API.class);
+        Call<Void> call = api.addOrderByUser(Utils.APIKEY, Utils.CONTENT_TYPE, order);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    isOrderSubmit.postValue(true);
+                } else {
+                    isOrderSubmit.postValue(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable throwable) {
+                isOrderSubmit.postValue(false);
+            }
+        });
+        return isOrderSubmit;
     }
 }
