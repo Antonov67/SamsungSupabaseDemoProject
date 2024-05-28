@@ -23,4 +23,5 @@
     <string name="the_record_has_been_deleted">the record has been deleted</string>
     <string name="user_id">user_id</string>
     <string name="user_email">user_email</string>
+    <string name="delete_text">To delete an order, use a long press</string>
 </resources>

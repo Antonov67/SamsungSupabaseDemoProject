@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textEmailAddress"
-        android:text="test@test.ru" />
+        android:text="test@test.test" />
 
     <TextView
         android:id="@+id/textView2"

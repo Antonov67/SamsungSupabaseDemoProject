@@ -24,7 +24,7 @@ public interface API {
 
     //выход пользователя из аккаунта
     @POST("logout")
-    Call<ResponseLogoutUser> userLogout(@Header("Authorization") String token, @Header("apikey") String apikey, @Header("Content-Type") String contentType);
+    Call<Void> userLogout(@Header("Authorization") String token, @Header("apikey") String apikey, @Header("Content-Type") String contentType);
 
     //получение всех заказов
     @GET("orders")
@@ -41,5 +41,4 @@ public interface API {
     //удаление заказа по id заказа
     @DELETE("orders")
     Call<Void> deleteOrder(@Header("apikey") String apikey, @Header("Content-Type") String contentType, @Query("id") String id);
-
 }

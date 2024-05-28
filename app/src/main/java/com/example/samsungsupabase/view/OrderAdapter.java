@@ -38,15 +38,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull OrderAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        binding.product.setText(orders.get(position).product);
-        binding.data.setText(orders.get(position).createdAt);
-        binding.cost.setText(String.valueOf(orders.get(position).cost));
+        binding.product.setText(orders.get(position).getProduct());
+        binding.data.setText(orders.get(position).getCreatedAt());
+        binding.cost.setText(String.valueOf(orders.get(position).getCost()));
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 //удалим запись по длинному нажатию
                 if (position < orders.size()) {
-                    longClickItemListener.deleteOrder(orders.get(position).id, position);
+                    longClickItemListener.deleteOrder(orders.get(position).getId(), position);
                     orders.remove(position);
                     notifyItemRemoved(position);
                 }

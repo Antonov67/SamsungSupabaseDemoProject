@@ -23,4 +23,5 @@
     <string name="the_record_has_been_deleted">Запись удалена</string>
     <string name="user_id">id пользователя</string>
     <string name="user_email">почта</string>
+    <string name="delete_text">Для удаления заказа используйте длительное нажатие</string>
 </resources>

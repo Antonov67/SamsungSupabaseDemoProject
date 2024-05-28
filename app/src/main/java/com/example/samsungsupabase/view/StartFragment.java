@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,6 @@ import com.example.samsungsupabase.Utils;
 import com.example.samsungsupabase.databinding.FragmentStartBinding;
 import com.example.samsungsupabase.model.retrofit.API;
 import com.example.samsungsupabase.model.Account;
-import com.example.samsungsupabase.model.retrofit.ResponseLogoutUser;
 import com.example.samsungsupabase.model.retrofit.ResponseSignUser;
 import com.example.samsungsupabase.model.retrofit.RetrofitClientAuth;
 
@@ -57,10 +57,10 @@ public class StartFragment extends Fragment {
         //Нажатие на кнопку выхода из аккаунта
         binding.logoutButton.setOnClickListener(view1 -> {
             if (!Utils.USER_TOKEN.equals("")) {
-                Call<ResponseLogoutUser> call = api.userLogout("Bearer " + Utils.USER_TOKEN, Utils.APIKEY, Utils.CONTENT_TYPE);
-                call.enqueue(new Callback<ResponseLogoutUser>() {
+                Call<Void> call = api.userLogout("Bearer " + Utils.USER_TOKEN, Utils.APIKEY, Utils.CONTENT_TYPE);
+                call.enqueue(new Callback<Void>() {
                     @Override
-                    public void onResponse(Call<ResponseLogoutUser> call, Response<ResponseLogoutUser> response) {
+                    public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.isSuccessful()){
                             Toast.makeText(getContext(), R.string.successful_exit, Toast.LENGTH_LONG).show();
                             //очистим поля ввода и данные пользователя
@@ -70,10 +70,13 @@ public class StartFragment extends Fragment {
                             binding.emailField.setText("");
                             binding.passwordField.setText("");
                         }
+                        else {
+                            Toast.makeText(getContext(), call.toString(), Toast.LENGTH_LONG).show();
+                        }
                     }
 
                     @Override
-                    public void onFailure(Call<ResponseLogoutUser> call, Throwable throwable) {
+                    public void onFailure(Call<Void> call, Throwable throwable) {
                         Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
@@ -102,6 +105,7 @@ public class StartFragment extends Fragment {
                         Utils.USER_ID = response.body().getUser().getId();
                         Utils.USER_TOKEN = response.body().getAccessToken();
                         Utils.USER_EMAIL = email;
+                        Log.d("777", Utils.USER_TOKEN);
                         //программно перейдем на фрагмент с заказами пользователя
                         binding.signInButton.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_startFragment_to_ordersFragment));
                         binding.signInButton.performClick();

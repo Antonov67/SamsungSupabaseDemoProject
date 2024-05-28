@@ -7,23 +7,39 @@ public class Order {
 
     @SerializedName("id")
     @Expose
-    public String id;
+    private String id;
     @SerializedName("created_at")
     @Expose
-    public String createdAt;
+    private String createdAt;
     @SerializedName("user_id")
     @Expose
-    public String userId;
+    private String userId;
     @SerializedName("product")
     @Expose
-    public String product;
+    private String product;
     @SerializedName("cost")
     @Expose
-    public double cost;
+    private double cost;
 
     public Order(String userId, String product, Double cost) {
         this.userId = userId;
         this.product = product;
         this.cost = cost;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public String getProduct() {
+        return product;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public String getId() {
+        return id;
     }
 }
